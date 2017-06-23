@@ -1,0 +1,93 @@
+﻿@model AspFinalTest.Models.Customer
+@{
+    ViewBag.Title = "1103137207 劉鈞庭";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("Index", "Customer", FormMethod.Post, new { id = "Form1" }))
+        {<h3>客戶資料查詢</h3>
+        <table class="table table-condensed">
+            <tr>
+                <td><label>客戶編號</label></td>
+                <td>
+                    @Html.TextBoxFor(model => model.CustomerID)
+                </td>
+            <tr>
+                <td>
+                    <label>客戶名稱</label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.CompanyName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>聯絡人姓名</label>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.ContactName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>聯絡人職稱</label>
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => model.ContactTitle, (List<SelectListItem>)ViewData["CodeData"])
+                 </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="查詢">
+                    <input type="reset" value="清除">
+                    @Html.ActionLink("新增員工", "InsertIndex")
+                </td>
+                <td></td>
+            </tr>
+
+        </table>}
+    </div>
+    <div>
+        <h3>查詢結果</h3>
+    </div>
+    <div>
+            <table class="table" >
+                <tr>
+                    <td colspan="3">編號</td>
+                    <td colspan="3">名稱</td>
+                    <td colspan="3">聯絡人姓名</td>
+                    <td colspan="3">聯絡人職稱</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                @foreach (var item in (List<AspFinalTest.Models.Customer>)ViewBag.Customerdata)
+                {
+                    <tr id='@item.CustomerID'>
+                        <td colspan="3">@item.CustomerID</td>
+                        <td colspan="3">@item.CompanyName</td>
+                        <td colspan="3">@item.ContactName</td>
+                        <td colspan="3">@item.ContactTitle</td>
+                        
+                        <td>@Html.ActionLink("修改", "UpdateOrders", new { id = item.CustomerID })</td>
+                        
+                        <td>
+                            <a class="btnDelete" href="#">刪除</a>
+                            <input class="hidOrderId" type="hidden" value='@item.CustomerID' />
+                        </td>
+                    </tr>
+                }
+            </table>
+      
+    </div>
+   
+</body>
+</html>
